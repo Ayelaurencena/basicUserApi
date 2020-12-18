@@ -16,8 +16,14 @@ class UserController {
 
     async addUser (req, res) {
         const { body , headers } = req;
+        const data = {
+            "name" : body.name
+        }
+
+        // Un numero o boolean lo toma como String
+        // Vacio lo toma como ok
         if (body.name && headers.token == "r2d2") {  
-            await this.userService.addUser(body.name);
+            await this.userService.addUser(data);
             //this.names.push(body.name);
             //console.log(this.names);
             res.status(200).send("Nombre agregado con exito");
@@ -32,20 +38,25 @@ class UserController {
 La respuesta de este endpoint tiene que ser un 200 si todo salio bien o un 400 si todo sale mal 
 (un ejemplo de que salga todo mal es que llegue vacío 'name') */
 
-    modifyName (req, res) {
-        const { id } = req.params;
+    async modifyUser (req, res) {
+        const { index } = req.params;
         const { name } = req.query;
-        this.names.splice(id, 1, name);
-            
+
+        const data = {
+            "name" : name
+        }
+
+        await this.userService.modifyName(index, data);
+    
         res.send('Entrada modificada correctamente')
     }
 
     /* método DELETE en la ruta /delete/:indice, y en el cual enviaremos un número de índice que representa 
         la posición del array de nombres que queremos borrar. */
 
-    deleteName (req,res) {
+    async deleteUser (req,res) {
         const { index } = req.params;
-        this.names.splice(index, 1)
+        await this.userService.deleteUser(index)
 
         res.send('La entrada ha sido borrada correctamente')
     }

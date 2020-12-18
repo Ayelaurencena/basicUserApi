@@ -15,17 +15,17 @@ router.post('/add', function(req, res, next) {
   UserInstance.addUser(req, res)
 });
 
-/*
+
 router.put('/modify/:index', function (req, res, next) {
    
-  UserInstance.modifyName(req, res)
+  UserInstance.modifyUser(req, res)
 });
 
 router.delete('/delete/:index', function (req, res, next) {
-  UserInstance.deleteName(req, res)
+  UserInstance.deleteUser(req, res)
 })
 
-*/
+
 
 
 module.exports = router;
