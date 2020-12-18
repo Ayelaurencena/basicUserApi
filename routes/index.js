@@ -1,9 +1,31 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const UserController = require("./../controllers/userController");
+const UserService = require("./../services/userService");
+const UserInstance = new UserController( new UserService());
 
-/* GET home page. */
+/* método GET en la ruta "/" que nos va a devolver un array de nombres que vayamos agregando 
+(al principio va a devolver un array vacio)*/
+
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  UserInstance.getUsers(req, res)
 });
+
+router.post('/add', function(req, res, next) {
+  UserInstance.addUser(req, res)
+});
+
+/*
+router.put('/modify/:index', function (req, res, next) {
+   
+  UserInstance.modifyName(req, res)
+});
+
+router.delete('/delete/:index', function (req, res, next) {
+  UserInstance.deleteName(req, res)
+})
+
+*/
+
 
 module.exports = router;
