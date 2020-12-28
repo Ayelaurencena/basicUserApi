@@ -11,6 +11,10 @@ router.get('/', function(req, res, next) {
   UserInstance.getUsers(req, res)
 });
 
+router.get('/paginated', function (req, res, next) {
+  UserInstance.getPaginatedUsers(req, res)
+})
+
 router.post('/add', function(req, res, next) {
   UserInstance.addUser(req, res)
 });

@@ -12,6 +12,14 @@ class UserController {
 
     };
 
+    // Traer los usuarios paginados
+    async getPaginatedUsers (req, res) {
+        const {limit, page} = req.query;
+        const offset =  limit * (page - 1); 
+        const users = await this.userService.getPaginatedUsers(limit, offset);
+        return res.json(users);
+    }
+
 //  request tiene un header 'token' con el valor 'r2d2'
 
     async addUser (req, res) {
@@ -23,10 +31,10 @@ class UserController {
         // Un numero o boolean lo toma como String
         // Vacio lo toma como ok
         if (body.name && headers.token == "r2d2") {  
-            await this.userService.addUser(data);
+            const response = await this.userService.addUser(data);
             //this.names.push(body.name);
             //console.log(this.names);
-            res.status(200).send("Nombre agregado con exito");
+            res.status(200).send(`Se ha agregado ${response} con exito`);
         } else {
             res.status(400).send("Formato no aceptado");
         }
@@ -63,3 +71,4 @@ La respuesta de este endpoint tiene que ser un 200 si todo salio bien o un 400 s
  }
 
 module.exports = UserController;
+
